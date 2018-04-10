@@ -67,6 +67,9 @@ endif
 ifeq ($(TARGET_USES_ION),true)
 libmm-venc-def += -DUSE_ION
 endif
+ifeq ($(TARGET_COMPILE_WITH_MSM_KERNEL),true)
+venc-inc       := $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr/include
+endif
 
 libmm-venc-def += -D_ANDROID_ICS_
 # ---------------------------------------------------------------------------------
@@ -105,6 +108,10 @@ LOCAL_SRC_FILES   += venc/src/video_encoder_device.cpp
 endif
 
 LOCAL_SRC_FILES   += common/src/extra_data_handler.cpp
+
+ifeq ($(TARGET_COMPILE_WITH_MSM_KERNEL),true)
+LOCAL_ADDITIONAL_DEPENDENCIES   := $(TARGET_OUT_INTERMEDIATES)/KERNEL_OBJ/usr
+endif
 
 include $(BUILD_SHARED_LIBRARY)
 
